@@ -17,37 +17,37 @@ function App() {
     }
   }, []);
 
-  const saveToLS = (params) => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  };
+  const saveToLS = (updatedTodos) => {
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+  };  
 
   const toggleFinished = (e) => {
     setshowFinished(!showFinished);
   };
 
   const handleEdit = (e, id) => {
-    let t = todos.filter((i) => i.id === id);
-    setTodo(t[0].todo);
-    let newTodos = todos.filter((item) => {
-      return item.id !== id;
-    });
+    let t = todos.find((i) => i.id === id);
+    setTodo(t.todo);
+    let newTodos = todos.filter((item) => item.id !== id);
     setTodos(newTodos);
-    saveToLS();
+    saveToLS(newTodos); // Save updated todos
   };
+  
 
   const handleDelete = (e, id) => {
-    let newTodos = todos.filter((item) => {
-      return item.id !== id;
-    });
+    let newTodos = todos.filter((item) => item.id !== id);
     setTodos(newTodos);
-    saveToLS();
+    saveToLS(newTodos); // Save updated todos
   };
+  
 
   const handleAdd = () => {
-    setTodos([...todos, { id: uuidv4(), todo, isCompleted: false }]);
+    const newTodos = [...todos, { id: uuidv4(), todo, isCompleted: false }];
+    setTodos(newTodos);
+    saveToLS(newTodos); // Save updated todos
     setTodo("");
-    saveToLS();
   };
+  
 
   const handleChange = (e) => {
     setTodo(e.target.value);
@@ -55,13 +55,11 @@ function App() {
 
   const handleCheckbox = (e) => {
     let id = e.target.name;
-    let index = todos.findIndex((item) => {
-      return item.id === id;
-    });
+    let index = todos.findIndex((item) => item.id === id);
     let newTodos = [...todos];
     newTodos[index].isCompleted = !newTodos[index].isCompleted;
     setTodos(newTodos);
-    saveToLS();
+    saveToLS(newTodos); // Save updated todos
   };
 
   return (
