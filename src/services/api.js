@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://localhost:5000/api';
+const baseURL = 'https://todobackend-git-main-shadowmonarch8688-gmailcoms-projects.vercel.app/api';
 
 const apiClient = axios.create({
   baseURL,
